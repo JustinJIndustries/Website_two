@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close mobile menu when clicking outside
     document.addEventListener('click', (event) => {
         const isClickInsideMenu = navLinks.contains(event.target);
-        const isClickOnMenuTog
+        const isClickOnMenuToggle = menuToggle.contains(event.target);
 
 gle = menuToggle.contains(event.target);
         if (!isClickInsideMenu && !isClickOnMenuToggle && window.innerWidth <= 768) {
