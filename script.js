@@ -1,85 +1,81 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const menuToggle = document.getElementById('menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+    const toggleButton = document.getElementById('dark-mode-toggle');
+    const menuButton = document.getElementById('menu-toggle');
+    const body = document.body;
+    const sunIcon = toggleButton.querySelector('.sun');
+    const moonIcon = toggleButton.querySelector('.moon');
+    const overlay = document.getElementById('overlay');
 
-    // Dark mode toggle
-    darkModeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-    });
-
-    // Check for saved dark mode preference
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
+    // Initialize Theme based on user's preference or saved preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        body.classList.toggle('dark-mode', savedTheme === 'dark');
+    } else {
+        // Detect system preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        body.classList.toggle('dark-mode', prefersDark);
     }
 
-    // Check system preference for dark mode
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark-mode');
+    // Update Icons based on initial theme
+    updateIcons();
+
+    // Dark Mode Toggle Event
+    toggleButton.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        const isDarkMode = body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        updateIcons();
+    });
+
+    // Menu Toggle Event
+    menuButton.addEventListener('click', () => {
+        menuButton.classList.toggle('active');
+        overlay.classList.toggle('active');
+        body.classList.toggle('menu-open');
+
+        const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+        menuButton.setAttribute('aria-expanded', !isExpanded);
+    });
+
+    // Close overlay when a link is clicked
+    const overlayLinks = overlay.querySelectorAll('.overlay-menu a');
+    overlayLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            menuButton.classList.remove('active');
+            overlay.classList.remove('active');
+            body.classList.remove('menu-open');
+            menuButton.setAttribute('aria-expanded', 'false');
+        });
+    });
+
+    // Close overlay when clicking outside the menu
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            menuButton.classList.remove('active');
+            overlay.classList.remove('active');
+            body.classList.remove('menu-open');
+            menuButton.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    // Close overlay with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) {
+            menuButton.classList.remove('active');
+            overlay.classList.remove('active');
+            body.classList.remove('menu-open');
+            menuButton.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    // Function to Update Icons
+    function updateIcons() {
+        if (body.classList.contains('dark-mode')) {
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+        } else {
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+        }
     }
-
-    // Mobile menu toggle
-    menuToggle.addEventListener('click', () => {
-        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (event) => {
-        const isClickInsideMenu = navLinks.contains(event.target);
-        const isClickOnMenuToggle = menuToggle.contains(event.target);
-        // Update the icon visibility based on the current mode
-        const updateDarkModeIcon = () => {
-            const isDarkMode = document.body.classList.contains('dark-mode');
-            darkModeToggle.querySelector('.moon').style.display = isDarkMode ? 'none' : 'inline-block';
-            darkModeToggle.querySelector('.sun').style.display = isDarkMode ? 'inline-block' : 'none';
-        };
-
-        // Call the function initially to set the correct icon
-        updateDarkModeIcon();
-
-        // Modify the dark mode toggle event listener
-        darkModeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-            updateDarkModeIcon();
-        });
-
-        // Update icon when checking saved preference
-        if (localStorage.getItem('darkMode') === 'true') {
-            document.body.classList.add('dark-mode');
-            updateDarkModeIcon();
-        }
-
-        // Update icon when checking system preference
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.body.classList.add('dark-mode');
-            updateDarkModeIcon();
-        }
-
-        // Listen for changes in system color scheme
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (e.matches) {
-                document.body.classList.add('dark-mode');
-            } else {
-                document.body.classList.remove('dark-mode');
-            }
-            updateDarkModeIcon();
-        });
-
-gle = menuToggle.contains(event.target);
-        if (!isClickInsideMenu && !isClickOnMenuToggle && window.innerWidth <= 768) {
-            navLinks.style.display = 'none';
-        }
-    });
-
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
 });

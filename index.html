@@ -15,17 +15,40 @@
                 <li><a href="#marketing">Marketing</a></li>
             </ul>
             <div class="nav-buttons">
-                <button id="dark-mode-toggle" aria-label="Toggle dark mode">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <button id="dark-mode-toggle" aria-label="Toggle dark mode" aria-pressed="false">
+                    <!-- Moon Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="moon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <!-- Sun Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="sun" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
                 </button>
-                <button id="menu-toggle" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
                 </button>
             </div>
         </nav>
+
+        <!-- Overlay Menu -->
+        <div id="overlay" class="overlay">
+            <ul class="overlay-menu">
+                <li><a href="#digital-media">Digital Media</a></li>
+                <li><a href="#web-development">Web Development</a></li>
+                <li><a href="#marketing">Marketing</a></li>
+            </ul>
+        </div>
     </header>
 
     <main>
@@ -33,7 +56,7 @@
             <div class="container">
                 <h1>Welcome to JustinJ Industries</h1>
                 <p>Transforming ideas into digital realities through innovative media, development, and marketing solutions.</p>
-                <a href="#" class="cta-button">Explore Our Services</a>
+                <!-- <a href="#" class="cta-button">Explore Our Services</a> -->
             </div>
         </section>
 
@@ -44,7 +67,7 @@
                     <div class="service-text">
                         <h3>Captivating Content Creation</h3>
                         <p>Our digital media team crafts compelling narratives that resonate with your audience across all platforms.</p>
-                        <a href="#" class="learn-more">Learn More</a>
+                        <!-- <a href="#" class="learn-more">Learn More</a> -->
                     </div>
                     <div class="service-image">
                         <img src="https://placehold.co/600x400" alt="Digital Media Illustration" width="600" height="400">
@@ -63,7 +86,7 @@
                     <div class="service-text">
                         <h3>Cutting-Edge Web Solutions</h3>
                         <p>We build responsive, scalable, and user-friendly websites that drive engagement and conversions.</p>
-                        <a href="#" class="learn-more">Discover Our Process</a>
+                        <!-- <a href="#" class="learn-more">Discover Our Process</a> -->
                     </div>
                 </div>
             </div>
@@ -76,7 +99,7 @@
                     <div class="service-text">
                         <h3>Strategic Digital Marketing</h3>
                         <p>Our data-driven marketing strategies help you reach the right audience and achieve measurable results.</p>
-                        <a href="#" class="learn-more">Explore Our Strategies</a>
+                        <!-- <a href="#" class="learn-more">Explore Our Strategies</a> -->
                     </div>
                     <div class="service-image">
                         <img src="https://placehold.co/600x400" alt="Marketing Illustration" width="600" height="400">
@@ -84,7 +107,7 @@
                 </div>
             </div>
         </section>
-
+<!--
         <section class="cta">
             <div class="container">
                 <h2>Ready to Transform Your Digital Presence?</h2>
@@ -95,11 +118,13 @@
                 </form>
             </div>
         </section>
+    -->
+
     </main>
 
     <footer>
         <div class="container">
-            <div class="footer-content">
+            <!-- <div class="footer-content">
                 <div class="footer-section">
                     <h3>JustinJ Industries</h3>
                     <p>Transforming ideas into digital realities.</p>
@@ -129,6 +154,7 @@
                     </ul>
                 </div>
             </div>
+        -->
             <div class="footer-bottom">
                 <p>&copy; 2024 JustinJ Industries. All rights reserved.</p>
             </div>

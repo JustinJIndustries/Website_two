@@ -4,6 +4,8 @@
     --background-color: #fff;
     --secondary-background: #f5f5f7;
     --border-color: #d2d2d7;
+    --overlay-background: rgba(0, 0, 0, 0.9);
+    --transition-speed: 0.3s;
 }
 
 .dark-mode {
@@ -24,7 +26,7 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--background-color);
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
 .container {
@@ -44,22 +46,9 @@ header {
 
 nav {
     display: flex;
-    align-items: center; /* Vertically centers the items */
-    justify-content: space-between; /* Distributes space evenly */
-    padding: 0 20px; /* Optional: Adds horizontal padding */
-}
-
-/* Ensure the <ul> inside nav is also a flex container */
-nav ul {
-    display: flex;
-    list-style: none; /* Removes default list styling */
-    margin: 0;
-    padding: 0;
-}
-
-/* Optional: Style the list items */
-nav ul li {
-    margin-right: 20px; /* Adds spacing between items */
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
 }
 
 .logo {
@@ -82,6 +71,16 @@ nav ul li {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
+    transition: color var(--transition-speed);
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-buttons {
+    display: flex;
+    align-items: center;
 }
 
 #dark-mode-toggle, #menu-toggle {
@@ -91,13 +90,15 @@ nav ul li {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
-    color: var(--text-color);
+    padding: 0.5rem;
+    position: relative;
+    z-index: 1001; /* Ensure buttons are above the overlay */
 }
 
 #dark-mode-toggle svg {
     width: 24px;
     height: 24px;
+    transition: display var(--transition-speed);
 }
 
 .moon {
@@ -112,17 +113,96 @@ nav ul li {
     display: inline;
 }
 
+/* Hamburger Menu Styles */
 #menu-toggle {
-    display: none;
+    display: none; /* Hidden by default, shown in media queries */
+    width: 40px;
+    height: 40px;
+    position: relative;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-#menu-toggle span {
+#menu-toggle .bar {
     display: block;
     width: 25px;
     height: 3px;
-    background-color: var(--text-color);
     margin: 5px 0;
-    transition: 0.4s;
+    background-color: var(--text-color);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+#menu-toggle.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+#menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+#menu-toggle.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(-5px, 5px);
+}
+
+/* Overlay Menu Styles */
+.overlay {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--overlay-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed), visibility var(--transition-speed);
+    z-index: 1000;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.overlay-menu {
+    list-style: none;
+    text-align: center;
+}
+
+.overlay-menu li {
+    margin: 1.5rem 0;
+}
+
+.overlay-menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 2rem;
+    transition: color var(--transition-speed);
+}
+
+.overlay-menu a:hover {
+    color: var(--primary-color);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    #menu-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .nav-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
 }
 
 .hero {
@@ -156,7 +236,7 @@ h1 {
 }
 
 .service h2 {
-    text-align: center;
+    text-align: left;
     margin-bottom: 2rem;
 }
 
@@ -248,50 +328,102 @@ footer {
 @media (max-width: 768px) {
     .nav-links {
         display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: var(--secondary-background);
+        position: absolute;
+        top: 60px; /* Adjust based on header height */
+        left: 0;
+        padding: 10px 0;
+        transition: max-height 0.3s ease-in-out;
+        overflow: hidden;
+        max-height: 0;
+        z-index: 999;
+    }
+
+    .nav-links.active {
+        display: flex;
+        max-height: 500px; /* Adjust as needed */
     }
 
     #menu-toggle {
         display: block;
     }
 
-    .service-content {
-        flex-direction: column;
-    }
-
-    .service-content.reverse {
-        flex-direction: column;
-    }
-
-    .cta-form {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .cta-form input, .cta-form .cta-button {
-        width: 100%;
-        max-width: 300px;
-        border-radius: 5px;
-        margin-bottom: 1rem;
-    }
-
-    nav {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    nav ul {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    nav ul li {
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
-
     .nav-buttons {
         width: 100%;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-between; /* Places buttons on opposite ends */
+        padding: 10px 20px; /* Adds padding for better spacing */
+        box-sizing: border-box; /* Ensures padding doesn't affect total width */
     }
+
+    #menu-toggle {
+        order: 1; /* Positions it first within the flex container */
+    }
+
+    #dark-mode-toggle {
+        order: 2; /* Positions it second within the flex container */
+    }
+
+    nav ul li {
+        margin: 10px 0; /* Adds vertical spacing between nav items */
+    }
+}
+
+/* Default Light Mode Styles */
+body {
+    background-color: #ffffff;
+    color: #000000;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Optional: Style the toggle button */
+#dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+#dark-mode-toggle svg {
+    display: none; /* Hide both icons by default */
+    width: 24px;
+    height: 24px;
+    transition: display 0.3s;
+}
+
+#dark-mode-toggle .moon {
+    display: inline; /* Show moon icon by default (light mode active) */
+}
+
+body.dark-mode #dark-mode-toggle .sun {
+    display: inline; /* Show sun icon in dark mode */
+}
+
+body.dark-mode #dark-mode-toggle .moon {
+    display: none; /* Hide moon icon in dark mode */
+}
+
+/* Dark Mode Sun Icon Styling */
+body.dark-mode #dark-mode-toggle .sun {
+    color: white; /* Ensure the sun icon is white in dark mode */
+    fill: white;  /* If using SVG, ensure the fill is white */
+    filter: brightness(1.5); /* Optional: Increase brightness for better visibility */
+}
+
+/* Light Mode Sun Icon Styling */
+body:not(.dark-mode) #dark-mode-toggle .sun {
+    color: #FFA500; /* Example: Orange color for the sun in light mode */
+    fill: #FFA500;  /* If using SVG, set to desired color */
 }
