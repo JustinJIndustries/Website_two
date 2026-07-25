@@ -1306,7 +1306,7 @@ select[aria-invalid="true"] {
   padding-block: clamp(28px, 3.6vw, 44px);
 }
 .page-gov .gov-section .section__head {
-  margin-bottom: 0.35rem;
+  margin-block-end: var(--space-sm);
 }
 .page-gov .gov-section .section__head p {
   max-width: 66ch;
